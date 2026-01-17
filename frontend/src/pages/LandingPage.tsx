@@ -123,9 +123,9 @@ export default function LandingPage() {
                         </div>
                         <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-zinc-700 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
                             <div className="p-8 sm:p-10 lg:flex-auto">
-                                <h3 className="text-2xl font-bold tracking-tight text-white">Acceso de por Vida (Beta)</h3>
+                                <h3 className="text-2xl font-bold tracking-tight text-white">Prueba Gratuita (3 Meses)</h3>
                                 <p className="mt-6 text-base leading-7 text-zinc-400">
-                                    Únete durante nuestra fase beta y obtén acceso exclusivo a todas las funciones premium para siempre. Ayúdanos a dar forma al futuro del software de reciclaje.
+                                    Únete ahora y disfruta de 3 meses completamente gratis. Después, una tarifa mensual accesible para seguir impulsando tu negocio.
                                 </p>
                                 <div className="mt-10 flex items-center gap-x-4">
                                     <h4 className="flex-none text-sm font-semibold leading-6 text-orange-500">Qué incluye</h4>
@@ -141,15 +141,15 @@ export default function LandingPage() {
                             <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
                                 <div className="rounded-2xl bg-zinc-900 py-10 text-center ring-1 ring-inset ring-zinc-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
                                     <div className="mx-auto max-w-xs px-8">
-                                        <p className="text-base font-semibold text-zinc-400">Pago único</p>
+                                        <p className="text-base font-semibold text-zinc-400">Suscripción Mensual</p>
                                         <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                                            <span className="text-5xl font-bold tracking-tight text-white">$0</span>
-                                            <span className="text-sm font-semibold leading-6 text-zinc-400">MXN</span>
+                                            <span className="text-5xl font-bold tracking-tight text-white">$1000</span>
+                                            <span className="text-sm font-semibold leading-6 text-zinc-400">MXN/mes</span>
                                         </p>
                                         <Button onClick={() => navigate('/login')} className="mt-10 w-full justify-center" variant="primary">
-                                            Obtener Acceso Ahora
+                                            Empezar Prueba Gratis
                                         </Button>
-                                        <p className="mt-6 text-xs leading-5 text-zinc-500">Facturas y recibos disponibles para reembolso empresarial</p>
+                                        <p className="mt-6 text-xs leading-5 text-zinc-500">*Después de 3 meses de prueba</p>
                                     </div>
                                 </div>
                             </div>

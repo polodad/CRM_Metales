@@ -28,11 +28,11 @@ export default function Login() {
                 body: JSON.stringify({ email }),
             });
 
-            if (!res.ok) throw new Error('Failed to send code');
+            if (!res.ok) throw new Error('Error al enviar el código');
 
             setStep(2);
         } catch (err: any) {
-            setError(err.message || 'Error sending code');
+            setError(err.message || 'Error al enviar el código');
         } finally {
             setLoading(false);
         }
@@ -51,14 +51,14 @@ export default function Login() {
 
             if (!res.ok) {
                 const data = await res.json();
-                throw new Error(data.message || 'Invalid code');
+                throw new Error(data.message || 'Código inválido');
             }
 
             const data = await res.json(); // { access_token, user }
             login(data.access_token, data.user);
             navigate('/dashboard');
         } catch (err: any) {
-            setError(err.message || 'Error verifying code');
+            setError(err.message || 'Error al verificar el código');
         } finally {
             setLoading(false);
         }
@@ -69,10 +69,10 @@ export default function Login() {
             <div className="w-full max-w-md p-8 rounded-xl border border-zinc-800 bg-zinc-900/50 shadow-2xl backdrop-blur-sm">
                 <div className="mb-8 text-center">
                     <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent">
-                        Metal CRM
+                        CRM Metales
                     </h1>
-                    <p className="text-zinc-400 mt-2">Sign in or create an account</p>
-                    <p className="text-xs text-zinc-500 mt-1">(New accounts are created automatically)</p>
+                    <p className="text-zinc-400 mt-2">Inicia sesión o crea una cuenta</p>
+                    <p className="text-xs text-zinc-500 mt-1">(Las cuentas nuevas se crean automáticamente)</p>
                 </div>
 
                 {error && (
@@ -85,14 +85,14 @@ export default function Login() {
                     <form onSubmit={handleSendOtp} className="space-y-4">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-zinc-400 mb-1">
-                                Email Address
+                                Correo Electrónico
                             </label>
                             <input
                                 type="email"
                                 id="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder="you@example.com"
+                                placeholder="tu@ejemplo.com"
                                 required
                                 className="w-full px-4 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all"
                             />
@@ -103,25 +103,25 @@ export default function Login() {
                             className="w-full justify-center"
                             disabled={loading}
                         >
-                            {loading ? 'Sending Code...' : 'Send Login Code'}
+                            {loading ? 'Enviando Código...' : 'Enviar Código de Acceso'}
                         </Button>
                     </form>
                 ) : (
                     <form onSubmit={handleVerifyOtp} className="space-y-4">
                         <div className="text-center mb-4">
-                            <span className="text-sm text-zinc-400">Code sent to </span>
+                            <span className="text-sm text-zinc-400">Código enviado a </span>
                             <span className="font-medium text-zinc-200">{email}</span>
                             <button
                                 type="button"
                                 onClick={() => setStep(1)}
                                 className="ml-2 text-xs text-orange-500 hover:text-orange-400 underline"
                             >
-                                Change
+                                Cambiar
                             </button>
                         </div>
                         <div>
                             <label htmlFor="otp" className="block text-sm font-medium text-zinc-400 mb-1">
-                                Enter Code
+                                Ingresar Código
                             </label>
                             <input
                                 type="text"
@@ -139,7 +139,7 @@ export default function Login() {
                             className="w-full justify-center"
                             disabled={loading}
                         >
-                            {loading ? 'Verifying...' : 'Sign In'}
+                            {loading ? 'Verificando...' : 'Iniciar Sesión'}
                         </Button>
                     </form>
                 )}
