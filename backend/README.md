@@ -83,6 +83,29 @@ Check out a few resources that may come in handy when working with NestJS:
 - To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
 - Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
+## Email Configuration
+
+The system uses **Passwordless Authentication** (OTP). 
+By default, in development mode, **emails are not sent**. The 6-digit login code is printed to the **Backend Terminal**.
+
+To send real emails (e.g., via Gmail), configure the `.env` file in the `backend` folder:
+
+1. **Host**: `smtp.gmail.com`
+2. **Port**: `587`
+3. **User**: Your Gmail address.
+4. **Pass**: Your **Google App Password** (Not your login password!). 
+   - [How to generate an App Password](https://support.google.com/accounts/answer/185833?hl=en)
+5. **Secure**: `false` (for port 587)
+
+Example `.env`:
+```ini
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_app_password
+SMTP_FROM="Metal CRM" <your_email@gmail.com>
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
