@@ -1,5 +1,7 @@
 
 
+
+
 export function Dashboard() {
     return (
         <div className="space-y-6">
@@ -26,8 +28,11 @@ export function Dashboard() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 bg-secondary/50 border border-secondary p-6 rounded-2xl h-80 flex items-center justify-center text-gray-500">
-                    Chart Placeholder (Kilos per Material)
+                <div className="lg:col-span-2 bg-zinc-900/50 border border-zinc-800 rounded-2xl overflow-hidden h-80 flex items-center justify-center relative group">
+                    <div className="text-center p-6">
+                        <h3 className="text-xl font-bold text-white mb-2">Vista General del Patio</h3>
+                        <p className="text-zinc-400 text-sm">Próximamente: Monitoreo en tiempo real</p>
+                    </div>
                 </div>
                 <div className="bg-secondary/50 border border-secondary p-6 rounded-2xl h-80 flex items-center justify-center text-gray-500">
                     Recent Activity

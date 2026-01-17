@@ -19,15 +19,15 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
 
-          <Route path="/dashboard" element={<ProtectedRoute />}>
+          <Route element={<ProtectedRoute />}>
             <Route element={<Layout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="reception" element={<Reception />} />
-              <Route path="sales" element={<Sales />} />
-              <Route path="contacts" element={<Contacts />} />
-              <Route path="materials" element={<Materials />} />
-              <Route path="reports" element={<Reports />} />
-              <Route path="admin" element={<div className="p-4">Admin (WIP)</div>} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/reception" element={<Reception />} />
+              <Route path="/sales" element={<Sales />} />
+              <Route path="/contacts" element={<Contacts />} />
+              <Route path="/materials" element={<Materials />} />
+              <Route path="/reports" element={<Reports />} />
+              <Route path="/admin" element={<div className="p-4">Admin (WIP)</div>} />
             </Route>
           </Route>
         </Routes>

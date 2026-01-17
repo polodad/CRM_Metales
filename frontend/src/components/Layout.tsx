@@ -5,7 +5,7 @@ import { cn } from '../lib/utils';
 import { useAuth } from '../context/AuthContext';
 
 const NAV_ITEMS = [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
+    { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
     { label: 'Recepción', icon: ScaleIcon, path: '/reception' },
     { label: 'Contactos', icon: Users, path: '/contacts' },
     { label: 'Catálogo', icon: Package, path: '/materials' },
