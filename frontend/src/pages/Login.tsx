@@ -17,12 +17,14 @@ export default function Login() {
     const { login } = useAuth();
     const navigate = useNavigate();
 
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
     const handleSendOtp = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
         try {
-            const res = await fetch('http://localhost:3000/auth/send-otp', {
+            const res = await fetch(`${API_URL}/auth/send-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email }),
@@ -43,7 +45,7 @@ export default function Login() {
         setLoading(true);
         setError(null);
         try {
-            const res = await fetch('http://localhost:3000/auth/verify-otp', {
+            const res = await fetch(`${API_URL}/auth/verify-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, code: otp }),
