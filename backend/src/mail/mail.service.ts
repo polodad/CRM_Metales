@@ -1,36 +1,40 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
+import { Resend } from 'resend';
 
 @Injectable()
 export class MailService {
     private readonly logger = new Logger(MailService.name);
+    private resend: Resend;
 
     constructor(
-        private readonly mailerService: MailerService,
         private readonly configService: ConfigService,
-    ) { }
+    ) {
+        const apiKey = this.configService.get('RESEND_API_KEY');
+        if (!apiKey) {
+            this.logger.error('RESEND_API_KEY is not defined in environment variables');
+        } else {
+            this.resend = new Resend(apiKey);
+        }
+    }
 
     async sendUserOtp(email: string, otp: string) {
         this.logger.log(`\n\n==============================\nSENDING OTP TO: ${email}\nOTP CODE: ${otp}\n==============================\n\n`);
 
-        const host = this.configService.get('SMTP_HOST');
-        const port = this.configService.get('SMTP_PORT');
-        const secure = this.configService.get('SMTP_SECURE');
-
-        this.logger.log(`[MailDebug] Config: Host=${host}, Port=${port}, Secure=${secure}`);
-
-        // In a real env, we would send the email here.
-        // For now, we just log it to ensure development velocity without needing valid SMTP creds immediately.
-
-        // DEBUG: Log the config being used
-        // Note: We can't easily access the config from MailerService directly here without injecting ConfigService,
-        // but the error 'connect ECONNREFUSED 127.0.0.1:587' confirms it's defaulting to localhost.
-        this.logger.debug(`Attempting to send email...`);
+        if (!this.resend) {
+            this.logger.error('Resend client is not initialized (missing API Key). Cannot send email.');
+            return;
+        }
 
         try {
-            await this.mailerService.sendMail({
-                to: email,
+            this.logger.debug(`Attempting to send email via Resend...`);
+
+            const from = 'onboarding@resend.dev'; // Use verified domain in production if available
+            // const from = this.configService.get('SMTP_FROM', 'onboarding@resend.dev');
+
+            const { data, error } = await this.resend.emails.send({
+                from,
+                to: email, // Must be the verified email for testing unless domain is verified
                 subject: 'Your CRM Login Code',
                 html: `
               <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
@@ -42,9 +46,14 @@ export class MailService {
               </div>
             `,
             });
+
+            if (error) {
+                this.logger.error(`Resend Error: ${JSON.stringify(error)}`);
+            } else {
+                this.logger.log(`Email sent successfully. ID: ${data?.id}`);
+            }
         } catch (e) {
-            // If email fails (e.g. no config), we still rely on the console log for dev
-            this.logger.warn(`Failed to send real email (expected if no SMTP config): ${e.message}`);
+            this.logger.error(`Failed to send email: ${e.message}`);
         }
     }
 }
