@@ -8,18 +8,11 @@ import { MailService } from './mail.service';
         MailerModule.forRootAsync({
             imports: [ConfigModule],
             useFactory: async (config: ConfigService) => {
-                const host = config.get('SMTP_HOST');
-                const port = config.get('SMTP_PORT', 587);
-                const secureRaw = config.get('SMTP_SECURE');
-                const secure = String(secureRaw).toLowerCase() === 'true';
-
-                console.log(`[MailModule] Initializing with: Host=${host}, Port=${port}, Secure=${secure} (Raw=${secureRaw})`);
+                console.log(`[MailModule] Initializing with: Service=gmail, User=${config.get('SMTP_USER')}`);
 
                 return {
                     transport: {
-                        host,
-                        port,
-                        secure,
+                        service: 'gmail',
                         auth: {
                             user: config.get('SMTP_USER'),
                             pass: config.get('SMTP_PASS'),
