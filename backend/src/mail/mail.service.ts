@@ -12,6 +12,12 @@ export class MailService {
 
         // In a real env, we would send the email here.
         // For now, we just log it to ensure development velocity without needing valid SMTP creds immediately.
+
+        // DEBUG: Log the config being used
+        // Note: We can't easily access the config from MailerService directly here without injecting ConfigService,
+        // but the error 'connect ECONNREFUSED 127.0.0.1:587' confirms it's defaulting to localhost.
+        this.logger.debug(`Attempting to send email...`);
+
         try {
             await this.mailerService.sendMail({
                 to: email,
