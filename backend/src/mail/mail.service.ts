@@ -1,14 +1,24 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class MailService {
     private readonly logger = new Logger(MailService.name);
 
-    constructor(private readonly mailerService: MailerService) { }
+    constructor(
+        private readonly mailerService: MailerService,
+        private readonly configService: ConfigService,
+    ) { }
 
     async sendUserOtp(email: string, otp: string) {
         this.logger.log(`\n\n==============================\nSENDING OTP TO: ${email}\nOTP CODE: ${otp}\n==============================\n\n`);
+
+        const host = this.configService.get('SMTP_HOST');
+        const port = this.configService.get('SMTP_PORT');
+        const secure = this.configService.get('SMTP_SECURE');
+
+        this.logger.log(`[MailDebug] Config: Host=${host}, Port=${port}, Secure=${secure}`);
 
         // In a real env, we would send the email here.
         // For now, we just log it to ensure development velocity without needing valid SMTP creds immediately.
