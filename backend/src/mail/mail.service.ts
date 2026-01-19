@@ -29,8 +29,7 @@ export class MailService {
         try {
             this.logger.debug(`Attempting to send email via Resend...`);
 
-            const from = 'onboarding@resend.dev'; // Use verified domain in production if available
-            // const from = this.configService.get('SMTP_FROM', 'onboarding@resend.dev');
+            const from = this.configService.get('SMTP_FROM') || 'onboarding@resend.dev';
 
             const { data, error } = await this.resend.emails.send({
                 from,
