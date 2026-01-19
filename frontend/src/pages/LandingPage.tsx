@@ -4,25 +4,25 @@ import DashboardHero from '../assets/dashboard-hero.jpg';
 
 // Icons
 const CheckIcon = () => (
-    <svg className="w-5 h-5 text-orange-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg className="w-5 h-5 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
     </svg>
 );
 
 const FeaturesIcon = () => (
-    <svg className="w-12 h-12 text-orange-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg className="w-12 h-12 text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
     </svg>
 )
 
 const SecurityIcon = () => (
-    <svg className="w-12 h-12 text-orange-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg className="w-12 h-12 text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
     </svg>
 )
 
 const GlobalIcon = () => (
-    <svg className="w-12 h-12 text-orange-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg className="w-12 h-12 text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
 )
@@ -37,7 +37,7 @@ export default function LandingPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         <div className="flex-shrink-0 flex items-center">
-                            <span className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent flex items-center gap-2">
+                            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent flex items-center gap-2">
                                 <span className="text-3xl">⚙️</span> <span>MetalCRM</span>
                             </span>
                         </div>
@@ -73,10 +73,10 @@ export default function LandingPage() {
                                 La plataforma todo en uno para gestionar compras, ventas, inventario y contactos via. Diseñada específicamente para la industria del reciclaje de metales para aumentar la eficiencia y la rentabilidad.
                             </p>
                             <div className="flex items-center justify-center gap-x-6">
-                                <Button onClick={() => navigate('/login')} className="px-8 py-3 text-lg shadow-lg shadow-orange-500/20" variant="accent">
+                                <Button onClick={() => navigate('/login')} className="px-8 py-3 text-lg shadow-lg shadow-primary/20" variant="accent">
                                     Comenzar Gratis
                                 </Button>
-                                <a href="#features" className="text-sm font-semibold leading-6 text-white hover:text-orange-400 transition drop-shadow-md">
+                                <a href="#features" className="text-sm font-semibold leading-6 text-white hover:text-accent transition drop-shadow-md">
                                     Saber más <span aria-hidden="true">→</span>
                                 </a>
                             </div>
@@ -88,7 +88,7 @@ export default function LandingPage() {
                 <div id="features" className="py-24 sm:py-32 bg-zinc-900/30">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="mx-auto max-w-2xl lg:text-center mb-16">
-                            <h2 className="text-base font-semibold leading-7 text-orange-500">Implementación rápida</h2>
+                            <h2 className="text-base font-semibold leading-7 text-primary">Implementación rápida</h2>
                             <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Todo lo que necesitas para gestionar tu chatarrera</p>
                             <p className="mt-6 text-lg leading-8 text-zinc-400">
                                 Olvídate de las hojas de cálculo y el papel. Cámbiate a una solución moderna que crece con tu negocio.
@@ -96,17 +96,17 @@ export default function LandingPage() {
                         </div>
                         <div className="mx-auto max-w-2xl lg:max-w-none">
                             <div className="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-3">
-                                <div className="flex flex-col items-start bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800 hover:border-orange-500/30 transition-colors">
+                                <div className="flex flex-col items-start bg-secondary/50 p-8 rounded-2xl border border-zinc-800 hover:border-primary/30 transition-colors">
                                     <FeaturesIcon />
                                     <h3 className="text-xl font-semibold leading-7 text-white mb-2">Inventario en Tiempo Real</h3>
                                     <p className="leading-7 text-zinc-400">Rastrea entradas y salidas de metales al instante. Conoce exactamente qué tienes y su valor estimado basado en precios actuales.</p>
                                 </div>
-                                <div className="flex flex-col items-start bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800 hover:border-orange-500/30 transition-colors">
+                                <div className="flex flex-col items-start bg-secondary/50 p-8 rounded-2xl border border-zinc-800 hover:border-primary/30 transition-colors">
                                     <SecurityIcon />
                                     <h3 className="text-xl font-semibold leading-7 text-white mb-2">Seguro y Confiable</h3>
                                     <p className="leading-7 text-zinc-400">Tus datos están encriptados y respaldados de forma segura. Accede a la información de tu negocio desde cualquier lugar.</p>
                                 </div>
-                                <div className="flex flex-col items-start bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800 hover:border-orange-500/30 transition-colors">
+                                <div className="flex flex-col items-start bg-secondary/50 p-8 rounded-2xl border border-zinc-800 hover:border-primary/30 transition-colors">
                                     <GlobalIcon />
                                     <h3 className="text-xl font-semibold leading-7 text-white mb-2">Gestión de Proveedores</h3>
                                     <p className="leading-7 text-zinc-400">Administra tus relaciones con proveedores y compradores. Mantén un historial de transacciones y contactos en un solo lugar.</p>
@@ -132,7 +132,7 @@ export default function LandingPage() {
                                     Únete ahora y disfruta de 3 meses completamente gratis. Después, una tarifa mensual accesible para seguir impulsando tu negocio.
                                 </p>
                                 <div className="mt-10 flex items-center gap-x-4">
-                                    <h4 className="flex-none text-sm font-semibold leading-6 text-orange-500">Qué incluye</h4>
+                                    <h4 className="flex-none text-sm font-semibold leading-6 text-primary">Qué incluye</h4>
                                     <div className="h-px flex-auto bg-zinc-700"></div>
                                 </div>
                                 <ul role="list" className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-zinc-300 sm:grid-cols-2 sm:gap-6">

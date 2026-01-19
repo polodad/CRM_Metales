@@ -8,19 +8,19 @@ export default {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: '#2563eb',
+                    DEFAULT: '#ea580c', // Copper/Rust Orange
                     foreground: '#ffffff',
                 },
                 secondary: {
-                    DEFAULT: '#1e293b',
+                    DEFAULT: '#334155', // Steel Blue-Grey
                     foreground: '#f8fafc',
                 },
                 accent: {
-                    DEFAULT: '#d97706',
-                    foreground: '#ffffff',
+                    DEFAULT: '#f59e0b', // Brass/Gold
+                    foreground: '#0f172a',
                 },
-                background: '#0f172a',
-                surface: '#1e293b',
+                background: '#0f172a', // Deep Slate
+                surface: '#1e293b', // Dark Steel
                 text: '#f1f5f9',
             },
         },

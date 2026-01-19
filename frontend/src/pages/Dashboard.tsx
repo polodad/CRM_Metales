@@ -17,7 +17,7 @@ export function Dashboard() {
                     { label: 'Compras Hoy', value: '1,250 kg', trend: '+12%', color: 'text-green-500' },
                     { label: 'Gastos Hoy', value: '$24,500', trend: '-5%', color: 'text-red-500' },
                     { label: 'Tickets', value: '18', trend: 'Normal', color: 'text-gray-400' },
-                    { label: 'Material Top', value: 'Cobre 1a', trend: 'High Demand', color: 'text-accent' },
+                    { label: 'Material Top', value: 'Cobre 1a', trend: 'High Demand', color: 'text-primary' },
                 ].map((stat, i) => (
                     <div key={i} className="bg-secondary/50 border border-secondary p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
                         <p className="text-sm text-gray-400 mb-2">{stat.label}</p>
