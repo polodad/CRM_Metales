@@ -37,13 +37,14 @@ export default function LandingPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
                         <div className="flex-shrink-0 flex items-center">
-                            <span className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent">
-                                CRM Metales
+                            <span className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent flex items-center gap-2">
+                                <span className="text-3xl">⚙️</span> <span>MetalCRM</span>
                             </span>
                         </div>
                         <div>
                             <Button onClick={() => navigate('/login')} variant="accent">
-                                Iniciar Sesión / Registrarse
+                                <span className="hidden sm:inline">Iniciar Sesión / Registrarse</span>
+                                <span className="sm:hidden">Entrar</span>
                             </Button>
                         </div>
                     </div>

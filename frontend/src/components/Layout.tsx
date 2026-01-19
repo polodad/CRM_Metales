@@ -49,7 +49,7 @@ export function Layout() {
             <div className="p-6 border-b border-secondary flex justify-between items-center">
                 <div>
                     <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                        CRM Metales
+                        MetalCRM
                     </h1>
                     <p className="text-xs text-gray-400">Sistema de Acopio</p>
                 </div>
@@ -134,7 +134,7 @@ export function Layout() {
                 {/* Mobile Header Bar */}
                 <div className="md:hidden flex items-center justify-between p-4 border-b border-secondary bg-background z-10">
                     <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                        CRM Metales
+                        MetalCRM
                     </h1>
                     <button onClick={toggleMobileMenu} className="p-2 text-gray-400 hover:text-white">
                         <Menu className="w-6 h-6" />
