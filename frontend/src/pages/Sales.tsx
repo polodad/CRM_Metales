@@ -3,7 +3,7 @@ import { Button } from '../components/ui/Button';
 import { Card, CardContent } from '../components/ui/Card';
 import { Table } from '../components/ui/Table';
 import { Modal } from '../components/ui/Modal';
-import { Plus, Truck, TrendingUp, DollarSign, Edit, Trash2 } from 'lucide-react';
+import { Plus, Truck, TrendingUp, DollarSign } from 'lucide-react';
 
 interface Sale {
     id: string;
@@ -146,8 +146,8 @@ export function Sales() {
             accessorKey: 'status' as keyof Sale,
             cell: (row: Sale) => (
                 <span className={`px-2 py-1 rounded-full text-xs ${row.status === 'Finalizado' || row.status === 'Pagado'
-                        ? 'bg-green-500/20 text-green-500'
-                        : 'bg-yellow-500/20 text-yellow-500'
+                    ? 'bg-green-500/20 text-green-500'
+                    : 'bg-yellow-500/20 text-yellow-500'
                     }`}>
                     {row.status}
                 </span>

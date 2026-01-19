@@ -3,7 +3,7 @@ import { Button } from '../components/ui/Button';
 import { Card, CardContent } from '../components/ui/Card';
 import { Input } from '../components/ui/Input';
 import { Modal } from '../components/ui/Modal';
-import { Plus, Tag, TrendingUp, TrendingDown, Edit2 } from 'lucide-react';
+import { Plus, Tag, Edit2 } from 'lucide-react';
 
 interface Material {
     id: string;
