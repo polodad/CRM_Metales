@@ -22,4 +22,19 @@ export class CreateMaterialDto {
     @IsNumber()
     @Min(0)
     defaultWastePercentage?: number;
+
+    @IsOptional()
+    @IsNumber()
+    @Min(0)
+    buyPrice?: number;
+
+    @IsOptional()
+    @IsNumber()
+    @Min(0)
+    sellPrice?: number;
+
+    @IsOptional()
+    @IsNumber()
+    @Min(0)
+    stock?: number;
 }

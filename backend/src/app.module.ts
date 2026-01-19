@@ -8,6 +8,9 @@ import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { PurchasesModule } from './purchases/purchases.module';
+import { SalesModule } from './sales/sales.module';
+import { ReportsModule } from './reports/reports.module';
 
 @Module({
   imports: [
@@ -47,6 +50,9 @@ import { AppService } from './app.service';
     UsersModule,
     AuthModule,
     MailModule,
+    PurchasesModule,
+    SalesModule,
+    ReportsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

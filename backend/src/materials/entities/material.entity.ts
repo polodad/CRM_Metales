@@ -33,6 +33,15 @@ export class Material {
     @Column({ type: 'float', default: 0 })
     defaultWastePercentage: number;
 
+    @Column('decimal', { precision: 10, scale: 2, default: 0 })
+    buyPrice: number;
+
+    @Column('decimal', { precision: 10, scale: 2, default: 0 })
+    sellPrice: number;
+
+    @Column('decimal', { precision: 10, scale: 2, default: 0 })
+    stock: number;
+
     @CreateDateColumn()
     createdAt: Date;
 

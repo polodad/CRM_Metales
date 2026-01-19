@@ -6,12 +6,49 @@ import { Table } from '../components/ui/Table';
 import { Modal } from '../components/ui/Modal';
 import { Plus, Scale, DollarSign, User, Camera, FileText } from 'lucide-react';
 
+interface Purchase {
+    id: string;
+    supplier: string;
+    material: string;
+    weight: number;
+    price: number;
+    total: number;
+    status: string;
+    createdAt: string;
+}
+
+interface Contact {
+    id: string;
+    name: string;
+}
+
+interface Material {
+    id: string;
+    name: string;
+    price: number;
+}
+
 export function Reception() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [purchases, setPurchases] = useState<Purchase[]>([]);
+    const [contacts, setContacts] = useState<Contact[]>([]);
+    const [materials, setMaterials] = useState<Material[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    // Form State
+    const [selectedSupplier, setSelectedSupplier] = useState('');
+    const [selectedMaterial, setSelectedMaterial] = useState('');
     const [grossWeight, setGrossWeight] = useState('');
     const [tara, setTara] = useState('');
     const [price, setPrice] = useState('');
     const [total, setTotal] = useState(0);
+
+    // Fetch Initial Data
+    useEffect(() => {
+        fetchPurchases();
+        fetchContacts();
+        fetchMaterials();
+    }, []);
 
     useEffect(() => {
         const w = parseFloat(grossWeight) || 0;
@@ -20,21 +57,89 @@ export function Reception() {
         setTotal((w - t) * p);
     }, [grossWeight, tara, price]);
 
-    // Mock Data
-    const purchases = [
-        { id: '1001', date: '2023-10-25 10:30', supplier: 'Juan Pérez', material: 'Cobre de Primera', weight: '15.5 kg', price: '$120.00', total: '$1,860.00', status: 'Pagado' },
-        { id: '1002', date: '2023-10-25 11:15', supplier: 'Metales del Norte', material: 'Aluminio Bote', weight: '50.0 kg', price: '$18.00', total: '$900.00', status: 'Pagado' },
-        { id: '1003', date: '2023-10-25 12:00', supplier: 'Cliente Casual', material: 'Fierro Viejo', weight: '120.0 kg', price: '$3.50', total: '$420.00', status: 'Pendiente' },
-    ];
+    const fetchPurchases = async () => {
+        setIsLoading(true);
+        try {
+            const res = await fetch('http://localhost:3000/purchases');
+            if (res.ok) setPurchases(await res.json());
+        } catch (error) {
+            console.error('Error fetching purchases:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const fetchContacts = async () => {
+        try {
+            const res = await fetch('http://localhost:3000/contacts');
+            if (res.ok) setContacts(await res.json());
+        } catch (error) {
+            console.error('Error fetching contacts:', error);
+        }
+    };
+
+    const fetchMaterials = async () => {
+        try {
+            const res = await fetch('http://localhost:3000/materials');
+            if (res.ok) setMaterials(await res.json());
+        } catch (error) {
+            console.error('Error fetching materials:', error);
+        }
+    };
+
+    const handleSavePurchase = async () => {
+        const weight = (parseFloat(grossWeight) || 0) - (parseFloat(tara) || 0);
+        if (!selectedSupplier || !selectedMaterial || weight <= 0) {
+            alert('Por favor complete todos los campos requeridos');
+            return;
+        }
+
+        const purchaseData = {
+            supplier: selectedSupplier,
+            material: selectedMaterial,
+            weight,
+            price: parseFloat(price) || 0,
+            total,
+            status: 'Pagado'
+        };
+
+        try {
+            const res = await fetch('http://localhost:3000/purchases', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(purchaseData)
+            });
+
+            if (res.ok) {
+                await fetchPurchases();
+                setIsModalOpen(false);
+                // Reset form
+                setGrossWeight('');
+                setTara('');
+                setPrice('');
+                setSelectedSupplier('');
+                setSelectedMaterial('');
+            } else {
+                alert('Error al guardar la compra');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Error al conectar con el servidor');
+        }
+    };
 
     const columns = [
-        { header: 'Folio', accessorKey: 'id' as keyof typeof purchases[0], className: 'font-mono text-gray-400' },
-        { header: 'Fecha', accessorKey: 'date' as keyof typeof purchases[0] },
-        { header: 'Proveedor', accessorKey: 'supplier' as keyof typeof purchases[0], className: 'font-medium text-white' },
-        { header: 'Material', accessorKey: 'material' as keyof typeof purchases[0] },
-        { header: 'Peso', accessorKey: 'weight' as keyof typeof purchases[0] },
-        { header: 'Precio/kg', accessorKey: 'price' as keyof typeof purchases[0] },
-        { header: 'Total', accessorKey: 'total' as keyof typeof purchases[0], className: 'text-green-500 font-bold' },
+        { header: 'Folio', accessorKey: 'id' as keyof Purchase, className: 'font-mono text-gray-400 text-xs' },
+        {
+            header: 'Fecha',
+            accessorKey: 'createdAt' as keyof Purchase,
+            cell: (row: Purchase) => new Date(row.createdAt).toLocaleString()
+        },
+        { header: 'Proveedor', accessorKey: 'supplier' as keyof Purchase, className: 'font-medium text-white' },
+        { header: 'Material', accessorKey: 'material' as keyof Purchase },
+        { header: 'Peso', accessorKey: 'weight' as keyof Purchase, cell: (row: Purchase) => `${row.weight} kg` },
+        { header: 'Precio/kg', accessorKey: 'price' as keyof Purchase, cell: (row: Purchase) => `$${row.price}` },
+        { header: 'Total', accessorKey: 'total' as keyof Purchase, className: 'text-green-500 font-bold', cell: (row: Purchase) => `$${row.total.toLocaleString()}` },
         {
             header: 'Estado',
             cell: (row: any) => (
@@ -44,6 +149,12 @@ export function Reception() {
             )
         },
     ];
+
+    // Calculate daily summaries from real data (this assumes data is all time, ideally backend should aggregate)
+    // For now, doing simple clientside sum
+    const dailyWeight = purchases.reduce((acc, curr) => acc + Number(curr.weight), 0);
+    const dailySpend = purchases.reduce((acc, curr) => acc + Number(curr.total), 0);
+    const uniqueSuppliers = new Set(purchases.map(p => p.supplier)).size;
 
     return (
         <div className="space-y-6">
@@ -65,8 +176,8 @@ export function Reception() {
                             <Scale className="w-8 h-8" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-400">Kilos Hoy</p>
-                            <p className="text-2xl font-bold">185.5 kg</p>
+                            <p className="text-sm text-gray-400">Kilos Totales</p>
+                            <p className="text-2xl font-bold">{dailyWeight.toFixed(1)} kg</p>
                         </div>
                     </CardContent>
                 </Card>
@@ -76,8 +187,8 @@ export function Reception() {
                             <DollarSign className="w-8 h-8" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-400">Gastado Hoy</p>
-                            <p className="text-2xl font-bold">$3,180.00</p>
+                            <p className="text-sm text-gray-400">Gastado Total</p>
+                            <p className="text-2xl font-bold">${dailySpend.toLocaleString()}</p>
                         </div>
                     </CardContent>
                 </Card>
@@ -87,41 +198,53 @@ export function Reception() {
                             <User className="w-8 h-8" />
                         </div>
                         <div>
-                            <p className="text-sm text-gray-400">Proveedores</p>
-                            <p className="text-2xl font-bold">3</p>
+                            <p className="text-sm text-gray-400">Proveedores Activos</p>
+                            <p className="text-2xl font-bold">{uniqueSuppliers}</p>
                         </div>
                     </CardContent>
                 </Card>
             </div>
 
-            <Table data={purchases} columns={columns} />
+            {isLoading ? (
+                <div className="text-center py-8 text-gray-400 animate-pulse">Cargando compras...</div>
+            ) : (
+                <Table data={purchases} columns={columns} />
+            )}
 
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Registrar Compra">
                 <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                         <div className="col-span-2">
                             <label className="text-sm text-gray-400 mb-1 block">Proveedor</label>
-                            <select className="w-full h-10 rounded-md border border-secondary bg-surface px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary">
-                                <option>Juan Pérez</option>
-                                <option>Metales del Norte</option>
-                                <option>Cliente Casual</option>
+                            <select
+                                className="w-full h-10 rounded-md border border-secondary bg-surface px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                                value={selectedSupplier}
+                                onChange={(e) => setSelectedSupplier(e.target.value)}
+                            >
+                                <option value="">Seleccionar Proveedor...</option>
+                                {contacts.map(contact => (
+                                    <option key={contact.id} value={contact.name}>{contact.name}</option>
+                                ))}
                             </select>
                         </div>
                         <div className="col-span-2">
                             <label className="text-sm text-gray-400 mb-1 block">Material</label>
                             <select
                                 className="w-full h-10 rounded-md border border-secondary bg-surface px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary"
+                                value={selectedMaterial}
                                 onChange={(e) => {
-                                    // Mock setting price based on selection
-                                    if (e.target.value.includes('Cobre')) setPrice('120');
-                                    else if (e.target.value.includes('Aluminio')) setPrice('18');
-                                    else setPrice('3.50');
+                                    const matName = e.target.value;
+                                    setSelectedMaterial(matName);
+                                    const mat = materials.find(m => m.name === matName);
+                                    if (mat) setPrice(mat.price.toString());
                                 }}
                             >
                                 <option value="">Seleccionar Material...</option>
-                                <option>Cobre de Primera ($120.00)</option>
-                                <option>Aluminio Bote ($18.00)</option>
-                                <option>Fierro Viejo ($3.50)</option>
+                                {materials.map(material => (
+                                    <option key={material.id} value={material.name}>
+                                        {material.name} (${material.price})
+                                    </option>
+                                ))}
                             </select>
                         </div>
                     </div>
@@ -153,7 +276,7 @@ export function Reception() {
                             <div>
                                 <label className="text-xs text-gray-500 mb-1 block">Peso Neto</label>
                                 <div className="h-10 flex items-center px-3 font-bold text-lg bg-surface/50 rounded-md border border-secondary">
-                                    {(parseFloat(grossWeight) || 0) - (parseFloat(tara) || 0)} kg
+                                    {((parseFloat(grossWeight) || 0) - (parseFloat(tara) || 0)).toFixed(2)} kg
                                 </div>
                             </div>
                         </div>
@@ -190,7 +313,7 @@ export function Reception() {
                         </span>
                     </div>
 
-                    <Button className="w-full mt-4" size="lg" onClick={() => setIsModalOpen(false)}>
+                    <Button className="w-full mt-4" size="lg" onClick={handleSavePurchase}>
                         Guardar y Pagar
                     </Button>
                 </div>
